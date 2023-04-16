@@ -11,7 +11,7 @@ export default function ChatsPage({ user }: ChatsPageProps): JSX.Element {
       <PrettyChatWindow
         projectId={import.meta.env.VITE_CHAT_ENGINE_PROJECT_ID}
         username={user.username}
-        secret={user.secret}
+        secret={user.username}
       />
     </div>
   )
