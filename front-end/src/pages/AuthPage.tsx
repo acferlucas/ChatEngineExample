@@ -1,17 +1,26 @@
 import { FormEvent, useState } from "react";
+import { User } from "../App";
+import { api } from '../server/axios'
 
 type AuthPageProps = {
-  onAuth: ({ username, secret }: { username: string, secret: string }) => void;
+  onAuth: (user: User) => void;
 }
 
-export default function AuthPage(props: AuthPageProps) {
+export default function AuthPage(props: AuthPageProps): JSX.Element {
   const [username, setUsername] = useState("");
 
-  function onSubmit(e: FormEvent) {
+  async function onSubmit(e: FormEvent) {
     e.preventDefault();
-    if (username) {
-      props.onAuth({ username: username, secret: username });
+    try {
+      const { data } = await api.post('/users', {
+        username,
+      })
+
+      props.onAuth(data)
+    } catch (err: any) {
+      console.log(err)
     }
+
   };
 
   return (
